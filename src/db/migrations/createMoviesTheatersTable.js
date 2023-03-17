@@ -1,4 +1,6 @@
-exports.up = function (knex) {
+exports.up = async function (knex) {
+  const exists = await knex.schema.hasTable("movies_theaters")
+  if (!exists){
   return knex.schema.createTable("movies_theaters", (table) => {
     table.integer("movie_id").unsigned().notNullable();
     table
@@ -15,6 +17,7 @@ exports.up = function (knex) {
     table.boolean("is_showing");
     table.timestamps(true, true);
   });
+}
 };
 
 exports.down = function (knex) {

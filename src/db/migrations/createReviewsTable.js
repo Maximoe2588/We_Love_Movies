@@ -1,4 +1,6 @@
-exports.up = function (knex) {
+exports.up = async function (knex) {
+  const exists = await knex.schema.hasTable("reviews")
+  if(!exists){
   return knex.schema.createTable("reviews", (table) => {
     table.increments("review_id").primary();
     table.text("content");
@@ -17,6 +19,7 @@ exports.up = function (knex) {
       .onDelete("cascade");
     table.timestamps(true, true);
   });
+}
 };
 
 exports.down = function (knex) {

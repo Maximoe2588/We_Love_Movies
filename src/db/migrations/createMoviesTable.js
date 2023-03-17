@@ -1,4 +1,6 @@
-exports.up = function (knex) {
+exports.up = async function (knex) {
+  const exists = await knex.schema.hasTable("movies")
+  if(!exists){
   return knex.schema.createTable("movies", (table) => {
     table.increments("movie_id").primary();
     table.string("title");
@@ -8,6 +10,7 @@ exports.up = function (knex) {
     table.text("image_url");
     table.timestamps(true, true);
   });
+}
 };
 
 exports.down = function (knex) {
